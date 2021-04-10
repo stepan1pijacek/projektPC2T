@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Sob 10. dub 2021, 10:55
+-- Vytvořeno: Sob 10. dub 2021, 18:12
 -- Verze serveru: 10.4.18-MariaDB
 -- Verze PHP: 7.3.27
 
@@ -20,19 +20,24 @@ SET time_zone = "+00:00";
 --
 -- Databáze: `vutbrno`
 --
-create schema if not exists `vutbrno` default character set utf8;
+DROP SCHEMA if EXISTS `vutbrno`;
+Create schema if not exists `vutbrno` default character set utf8;
+use `vutbrno`;
 -- --------------------------------------------------------
 
 --
 -- Struktura tabulky `students`
 --
 
-CREATE TABLE IF NOT EXISTS `vutbrno`.`students` (
+DROP TABLE IF EXISTS `students`;
+CREATE TABLE IF NOT EXISTS `students` (
   `ID` int(16) NOT NULL,
   `Name` varchar(256) COLLATE utf8_czech_ci NOT NULL,
   `Surname` varchar(256) COLLATE utf8_czech_ci NOT NULL,
   `Birth` date NOT NULL,
-  `Schoolership` tinyint(1) NOT NULL
+  `Schoolership` tinyint(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -41,10 +46,15 @@ CREATE TABLE IF NOT EXISTS `vutbrno`.`students` (
 -- Struktura tabulky `students_&_teachers_relationship`
 --
 
-CREATE TABLE IF NOT EXISTS `vutbrno`.`students_&_teachers_relationship` (
+DROP TABLE IF EXISTS `students_&_teachers_relationship`;
+CREATE TABLE IF NOT EXISTS `students_&_teachers_relationship` (
   `ID` int(11) NOT NULL,
   `studentsID` int(11) NOT NULL,
-  `teachersID` int(11) NOT NULL
+  `teachersID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`),
+  KEY `studentsID` (`studentsID`,`teachersID`),
+  KEY `teachersID` (`teachersID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -53,11 +63,15 @@ CREATE TABLE IF NOT EXISTS `vutbrno`.`students_&_teachers_relationship` (
 -- Struktura tabulky `students_score`
 --
 
-CREATE TABLE IF NOT EXISTS `vutbrno`.`students_score` (
+DROP TABLE IF EXISTS `students_score`;
+CREATE TABLE IF NOT EXISTS `students_score` (
   `ID` int(11) NOT NULL,
   `stuentsID` int(11) NOT NULL,
   `Grade` int(11) NOT NULL,
-  `Subject` varchar(256) COLLATE utf8_czech_ci NOT NULL
+  `Subject` varchar(256) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`),
+  KEY `stuentsID` (`stuentsID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -66,50 +80,18 @@ CREATE TABLE IF NOT EXISTS `vutbrno`.`students_score` (
 -- Struktura tabulky `teachers`
 --
 
-CREATE TABLE IF NOT EXISTS `vutbrno`.`teachers` (
+DROP TABLE IF EXISTS `teachers`;
+CREATE TABLE IF NOT EXISTS `teachers` (
   `ID` int(11) NOT NULL,
   `Name` varchar(256) COLLATE utf8_czech_ci NOT NULL,
   `Surname` varchar(256) COLLATE utf8_czech_ci NOT NULL,
   `Birth` date NOT NULL,
   `FinancialFunds` int(255) NOT NULL,
   `Bonus` int(255) NOT NULL,
-  `NoOfStudents` int(255) NOT NULL
+  `NoOfStudents` int(255) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
-
---
--- Indexy pro exportované tabulky
---
-
---
--- Indexy pro tabulku `students`
---
-ALTER TABLE `students`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `ID` (`ID`);
-
---
--- Indexy pro tabulku `students_&_teachers_relationship`
---
-ALTER TABLE `students_&_teachers_relationship`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `ID` (`ID`),
-  ADD KEY `studentsID` (`studentsID`,`teachersID`),
-  ADD KEY `teachersID` (`teachersID`);
-
---
--- Indexy pro tabulku `students_score`
---
-ALTER TABLE `students_score`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `ID` (`ID`),
-  ADD KEY `stuentsID` (`stuentsID`);
-
---
--- Indexy pro tabulku `teachers`
---
-ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `ID` (`ID`);
 
 --
 -- Omezení pro exportované tabulky
