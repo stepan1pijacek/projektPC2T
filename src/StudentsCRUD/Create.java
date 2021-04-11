@@ -9,8 +9,9 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class Create extends Students {
-    public Create(String name, String surname, Date birth, Boolean schoolership) {
-        super(name, surname, birth, schoolership);
+    private String Name;
+    public Create(String name, String surname, Date birth, Boolean scholarship) {
+        super(name, surname, birth, scholarship);
     }
 
     public void insertNewStudent(Students students){
@@ -22,7 +23,7 @@ public class Create extends Students {
         String insertQuery = "INSERT INTO students (ID, Name, Surname, Birth, Schoolership) VALUES (?, ?, ?, ?, ?)";
 
         try(PreparedStatement prSmt = conn.prepareStatement(insertQuery)){
-            prSmt.setObject(1, students.ID);
+            prSmt.setObject(1, students.getID());
             prSmt.setObject(2, students.getName());
             prSmt.setObject(3, students.getSurname());
             prSmt.setObject(4, students.getBirth());

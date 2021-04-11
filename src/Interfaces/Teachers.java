@@ -2,11 +2,29 @@ package Interfaces;
 
 import java.util.Date;
 
-public interface Teachers {
-    String Name = "";
-    String Surname = "";
-    Date Birth = null;
-    Double FinancialFunds = 0.0;
-    Double Bonus = 0.0;
-    int NoOfStudents = 0;
+public class Teachers {
+    private int ID;
+    private String Name;
+    private String Surname;
+    private Date Birth;
+    private double FinancialFunds;
+    private double Bonus;
+    private int NoOfStudents;
+
+    public Teachers(String name, String surname, Date birth, double financialFunds, double bonus, int noOfStudents){
+        Name = name;
+        Surname = surname;
+        Birth = birth;
+        FinancialFunds = financialFunds;
+        Bonus = bonus;
+        NoOfStudents = noOfStudents;
+    }
+
+    public String getName(){return Name;}
+    public String getSurname(){return Surname;}
+    public Date getBirth(){return Birth;}
+    public double getFinancialFunds(){return FinancialFunds;}
+    public double getBonus() {return Bonus;}
+
+    public int getNoOfStudents() {return NoOfStudents;}
 }
