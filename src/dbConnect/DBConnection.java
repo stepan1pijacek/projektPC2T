@@ -1,3 +1,6 @@
+/**
+ * @author Stepan Pijacek(223313)
+ **/
 package dbConnect;
 
 import java.sql.Connection;
@@ -17,7 +20,7 @@ public class DBConnection {
                 if(dbConnection == null){
                     try{
                         Class.forName("com.mysql.cj.jdbc.Driver");
-                        dbConnection = DriverManager.getConnection("jdbc:mysql://localhost/vutbrno?user=root&password=");
+                        dbConnection = DriverManager.getConnection("jdbc:mysql://localhost/projektpc2t?user=root&password=");
                     } catch (ClassNotFoundException | SQLException e) {
                         e.printStackTrace();
                     }
