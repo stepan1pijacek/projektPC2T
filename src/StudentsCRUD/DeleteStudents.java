@@ -3,6 +3,7 @@
  **/
 package StudentsCRUD;
 
+import Utilities.Subjects;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
 
@@ -33,7 +34,7 @@ public class DeleteStudents implements Interfaces.Delete {
     @Override
     public void deleteStudentTeacherRelation(int studentID, int teachersID) {
         if(!UserExists.testIfExistsByID(studentID, "students") || !UserExists.testIfExistsByID(teachersID, "teachers")){
-            throw new IllegalArgumentException(("Double check provided ID, one of them might be faulty"));
+            throw new IllegalArgumentException("Double check provided ID, one of them might be faulty");
         }
 
         Connection conn = DBConnection.getDbConnection();
@@ -45,6 +46,25 @@ public class DeleteStudents implements Interfaces.Delete {
             prSmt.executeUpdate();
 
             System.out.println("Student and teacher relation has been deleted");
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteScore(int id, Subjects subjects){
+        if(!UserExists.testIfExistsByID(id,"students")){
+            throw new IllegalArgumentException("There is no student with provided ID");
+        }
+
+        Connection conn = DBConnection.getDbConnection();
+        String deleteScore = "DELETE FROM students_score WHERE studentsID = ? AND Subject = ?";
+
+        try(PreparedStatement prSmt = conn.prepareStatement(deleteScore)){
+            prSmt.setInt(1, id);
+            prSmt.setString(2, subjects.name());
+            prSmt.executeUpdate();
+
+            System.out.println("Score has been removed");
         } catch(SQLException e){
             e.printStackTrace();
         }

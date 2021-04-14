@@ -15,13 +15,10 @@ public class UserExists {
         Connection conn = DBConnection.getDbConnection();
         String testUserExistence = "SELECT * FROM "+ table +" WHERE ID = ?";
 
-        try (PreparedStatement prStmt = conn.prepareStatement(testUserExistence);) {
+        try (PreparedStatement prStmt = conn.prepareStatement(testUserExistence)) {
             prStmt.setInt(1, ID);
             ResultSet rs = prStmt.executeQuery();
-            if (rs.next())
-                return true;
-            else
-                return false;
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

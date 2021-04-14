@@ -14,17 +14,9 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class CreateStudents extends Students implements Interfaces.Create {
-    private String Name;
-    private String Surname;
-    private Date Birth;
-    private int Scholarship;
+
     public CreateStudents(String name, String surname, Date birth, int scholarship) {
         super(name, surname, birth, scholarship);
-
-        Name = name;
-        Surname = surname;
-        Birth = birth;
-        Scholarship = scholarship;
     }
 
     @Override
@@ -33,10 +25,10 @@ public class CreateStudents extends Students implements Interfaces.Create {
         String insertQuery = "INSERT INTO students ( Name, Surname, Birth, Scholarship) VALUES ( ?, ?, ?, ?)";
 
         try(PreparedStatement prSmt = conn.prepareStatement(insertQuery)){
-            prSmt.setObject(1, Name);
-            prSmt.setObject(2, Surname);
-            prSmt.setObject(3, Birth);
-            prSmt.setObject(4, Scholarship);
+            prSmt.setObject(1, this.getName());
+            prSmt.setObject(2, this.getSurname());
+            prSmt.setObject(3, this.getBirth());
+            prSmt.setObject(4, this.getScholarship());
 
             prSmt.executeUpdate();
             System.out.println("New student has been added!");

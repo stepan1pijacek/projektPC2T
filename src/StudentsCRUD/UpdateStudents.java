@@ -3,22 +3,21 @@
  **/
 package StudentsCRUD;
 
-import Models.Students;
 import Interfaces.UpdateStudent;
+import Models.Students;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
 public class UpdateStudents extends Students implements UpdateStudent {
-    private String Name;
-    private String Surname;
-    private Date Birth;
-    private int Scholarship;
+    private final String Name;
+    private final String Surname;
+    private final Date Birth;
+    private final int Scholarship;
     public UpdateStudents(String name, String surname, Date birth, int scholarship) {
         super(name, surname, birth, scholarship);
 
@@ -74,5 +73,6 @@ public class UpdateStudents extends Students implements UpdateStudent {
             e.printStackTrace();
         }
     }
+
 
 }

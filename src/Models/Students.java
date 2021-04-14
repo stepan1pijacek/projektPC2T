@@ -7,10 +7,10 @@ import java.util.Date;
 
 public class Students {
     private int ID;
-    private String Name;
-    private String Surname;
-    private Date Birth;
-    private int Scholarship;
+    private final String Name;
+    private final String Surname;
+    private final Date Birth;
+    private final int Scholarship;
 
     public Students(String name, String surname, Date birth, int scholarship){
         Name = name;

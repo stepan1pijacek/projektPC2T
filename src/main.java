@@ -12,7 +12,7 @@ public class main {
     public static void main(String[] args) throws ParseException {
         String sDate = "22.05.2000";
         CreateStudents c1 = new CreateStudents("John", "Cena", new SimpleDateFormat("dd.MM.yyyy").parse(sDate), 0);
-        //c1.insertNewScore(3,"PC2T",1);
+        c1.insertNewUser();
         DeleteStudents d1 = new DeleteStudents();
         d1.deleteUserByID(1);
 
