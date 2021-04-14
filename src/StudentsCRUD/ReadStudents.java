@@ -4,7 +4,6 @@
 package StudentsCRUD;
 
 import Models.Students;
-import Interfaces.ReadStudents;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
 
@@ -13,11 +12,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 
-public class Read implements ReadStudents {
+public class ReadStudents implements Interfaces.Read {
+
     @Override
-    public void readAllStudents() {
+    public void readAllUser() {
         Connection conn = DBConnection.getDbConnection();
         String getAllStudents = "SELECT * FROM students";
 
@@ -41,7 +40,7 @@ public class Read implements ReadStudents {
     }
 
     @Override
-    public void readOneStudent(int id) {
+    public void readOneUser(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -88,7 +87,6 @@ public class Read implements ReadStudents {
         }
     }
 
-    @Override
     public void readStudentsTeachersRelations(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
@@ -97,6 +95,7 @@ public class Read implements ReadStudents {
         Connection conn = DBConnection.getDbConnection();
         //Select with using of junction table
         String getRelationShips = "SELECT " +
+                "students.ID, " +
                 "students.Name, " +
                 "students.Surname, " +
                 "teachers.Name, " +
@@ -112,13 +111,15 @@ public class Read implements ReadStudents {
             ResultSet rs = prSmt.executeQuery();
 
             while(rs.next()){
-                String studentName = rs.getString(1);
-                String studentSurname = rs.getString(2);
-                String teachersName = rs.getString(3);
-                String teachersSurname = rs.getString(4);
+                int ID = rs.getInt(1);
+                String studentName = rs.getString(2);
+                String studentSurname = rs.getString(3);
+                String teachersName = rs.getString(4);
+                String teachersSurname = rs.getString(5);
 
                 System.out.println(
                         "Relation{" +
+                                " students ID = " + ID + "," +
                                 " Students name = " + studentName + "," +
                                 " students surname = " + studentSurname + "," +
                                 " Teachers name = " + teachersName + "," +
@@ -130,7 +131,6 @@ public class Read implements ReadStudents {
         }
     }
 
-    @Override
     public void getStudentsAVG(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");

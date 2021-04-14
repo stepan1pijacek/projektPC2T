@@ -4,7 +4,7 @@
 package StudentsCRUD;
 
 import Models.Students;
-import Interfaces.CreateStudents;
+import Utilities.Subjects;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
 
@@ -13,12 +13,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class Create extends Students implements CreateStudents{
+public class CreateStudents extends Students implements Interfaces.Create {
     private String Name;
     private String Surname;
     private Date Birth;
     private int Scholarship;
-    public Create(String name, String surname, Date birth, int scholarship) {
+    public CreateStudents(String name, String surname, Date birth, int scholarship) {
         super(name, surname, birth, scholarship);
 
         Name = name;
@@ -28,7 +28,7 @@ public class Create extends Students implements CreateStudents{
     }
 
     @Override
-    public void insertNewStudent(){
+    public void insertNewUser(){
         Connection conn = DBConnection.getDbConnection();
         String insertQuery = "INSERT INTO students ( Name, Surname, Birth, Scholarship) VALUES ( ?, ?, ?, ?)";
 
@@ -45,8 +45,7 @@ public class Create extends Students implements CreateStudents{
         }
     }
 
-    @Override
-    public void insertNewScore(int score, String subject, int id) {
+    public void insertNewScore(int score, Subjects subjects, int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -57,7 +56,7 @@ public class Create extends Students implements CreateStudents{
         try(PreparedStatement prSmt = conn.prepareStatement(insertScore)){
             prSmt.setInt(1, id);
             prSmt.setInt(2, score);
-            prSmt.setString(3,subject);
+            prSmt.setString(3,subjects.name());
 
             prSmt.executeUpdate();
             System.out.println("New score has been assigned to student");
@@ -75,6 +74,7 @@ public class Create extends Students implements CreateStudents{
         Connection conn = DBConnection.getDbConnection();
         String insertRelationship = "INSERT INTO students_&_teachers (StudentsID, TeachersID) VALUES (?, ?)";
 
+        System.out.println("New relationship has been created student x teacher");
         try(PreparedStatement prSmt = conn.prepareStatement(insertRelationship)){
             prSmt.setInt(1, studentID);
             prSmt.setInt(2, teacherID);

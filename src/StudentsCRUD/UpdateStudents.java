@@ -8,17 +8,18 @@ import Interfaces.UpdateStudent;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class Update extends Students implements UpdateStudent {
+public class UpdateStudents extends Students implements UpdateStudent {
     private String Name;
     private String Surname;
     private Date Birth;
     private int Scholarship;
-    public Update(String name, String surname, Date birth, int scholarship) {
+    public UpdateStudents(String name, String surname, Date birth, int scholarship) {
         super(name, surname, birth, scholarship);
 
         Name = name;
@@ -37,11 +38,15 @@ public class Update extends Students implements UpdateStudent {
         }
 
         Connection conn = DBConnection.getDbConnection();
-        String updateQuery = "UPDATE students SET Schoolership = ? WHERE ID = ?";
+        String updateQuery = "UPDATE students SET Scholarship = ? WHERE ID = ?";
 
         try(PreparedStatement prSmt = conn.prepareStatement(updateQuery)){
             prSmt.setInt(1, scholarship);
             prSmt.setInt(2, id);
+
+            prSmt.executeUpdate();
+
+            System.out.println("Student has gained scholarship");
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -61,6 +66,10 @@ public class Update extends Students implements UpdateStudent {
             prSmt.setString(2, Surname);
             prSmt.setDate(3, (java.sql.Date) Birth);
             prSmt.setInt(4, id);
+
+            prSmt.executeUpdate();
+
+            System.out.println("Students personal info has been updated!");
         } catch (SQLException e){
             e.printStackTrace();
         }

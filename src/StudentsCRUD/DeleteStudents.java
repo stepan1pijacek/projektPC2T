@@ -3,7 +3,6 @@
  **/
 package StudentsCRUD;
 
-import Interfaces.DeleteStudents;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
 
@@ -11,10 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Delete implements DeleteStudents {
+public class DeleteStudents implements Interfaces.Delete {
 
     @Override
-    public void deleteStudentByID(int ID){
+    public void deleteUserByID(int ID){
         if(!UserExists.testIfExistsByID(ID, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -24,6 +23,8 @@ public class Delete implements DeleteStudents {
         try(PreparedStatement prSmt = conn.prepareStatement(deleteStudent)){
             prSmt.setInt(1, ID);
             prSmt.executeUpdate();
+
+            System.out.println("Student has been deleted");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,6 +43,8 @@ public class Delete implements DeleteStudents {
             prSmt.setInt(1, studentID);
             prSmt.setInt(2, teachersID);
             prSmt.executeUpdate();
+
+            System.out.println("Student and teacher relation has been deleted");
         } catch(SQLException e){
             e.printStackTrace();
         }

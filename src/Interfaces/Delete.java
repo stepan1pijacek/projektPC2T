@@ -1,6 +1,6 @@
 package Interfaces;
 
-public interface DeleteStudents {
-    void deleteStudentByID(int ID);
+public interface Delete {
+    void deleteUserByID(int ID);
     void deleteStudentTeacherRelation(int studentID, int teacherID);
 }
