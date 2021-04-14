@@ -20,8 +20,6 @@ public class main {
         //ReadStudents r1 = new ReadStudents();
         //r1.getStudentsAVG(1);
 
-        UpdateTeacher t1 = new UpdateTeacher();
-        t1.giveBonus(1);
 
     }
 }

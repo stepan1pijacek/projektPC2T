@@ -1,10 +1,9 @@
 /**
- * @author Stepan Pijacek (223313)
+  @author Stepan Pijacek (223313)
  * */
 package TeachersCRUD;
 
-import Interfaces.UpdateTeachers;
-import Models.Teachers;
+import Interfaces.Update;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
 
@@ -12,19 +11,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
-public class UpdateTeacher implements UpdateTeachers {
+public class UpdateTeacher implements Update {
 
     private static final int BONUS = 1500;
 
-    @Override
     public void giveBonus(int id) {
         if(!UserExists.testIfExistsByID(id, "teachers")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
 
-        int bonusGiven = 0;
-        int studentCount = 0;
+        int bonusGiven;
+        int studentCount;
+        studentCount = 0;
         Connection conn = DBConnection.getDbConnection();
         String selectStudents = "SELECT " +
                 "students.ID " +
@@ -59,10 +59,9 @@ public class UpdateTeacher implements UpdateTeachers {
         }
     }
 
-    @Override
     public void takeBonus(int id) {
         if(!UserExists.testIfExistsByID(id, "teachers")){
-            throw new IllegalArgumentException("There is no student with provided ID");
+            throw new IllegalArgumentException("There is no teacher with provided ID");
         }
 
         Connection conn = DBConnection.getDbConnection();
@@ -79,12 +78,32 @@ public class UpdateTeacher implements UpdateTeachers {
     }
 
     @Override
-    public void updatePersonalInfo(int id) {
+    public void updatePersonalInfo(int id, String Name, String Surname, Date Birth) {
+        if(!UserExists.testIfExistsByID(id, "teachers")){
+            throw new IllegalArgumentException("There is no teacher with provided ID");
+        }
 
+        Connection conn = DBConnection.getDbConnection();
+        String updateTeacher = "UPDATE teachers SET Name = ?, Surname = ?, Birth = ? WHERE ID = ?";
+
+        try(PreparedStatement prSmt = conn.prepareStatement(updateTeacher)){
+            prSmt.setString(1, Name);
+            prSmt.setString(2, Surname);
+            prSmt.setDate(3, (java.sql.Date) Birth);
+            prSmt.setInt(4, id);
+
+            prSmt.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void increaseOrDecreasePay(int id) {
+    public void increasePay(int id) {
+        if(!UserExists.testIfExistsByID(id, "teachers")){
+            throw new IllegalArgumentException("There is no teacher with provided ID");
+        }
 
+        Connection conn = DBConnection.getDbConnection();
+        String selectPay = "SELECT Pay FROM teachers WHERE ID = ?";
     }
 }
