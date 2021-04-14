@@ -4,21 +4,24 @@
 import StudentsCRUD.CreateStudents;
 import StudentsCRUD.DeleteStudents;
 import StudentsCRUD.ReadStudents;
+import TeachersCRUD.UpdateTeacher;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class main {
     public static void main(String[] args) throws ParseException {
-        String sDate = "22.05.2000";
-        CreateStudents c1 = new CreateStudents("John", "Cena", new SimpleDateFormat("dd.MM.yyyy").parse(sDate), 0);
-        c1.insertNewUser();
-        DeleteStudents d1 = new DeleteStudents();
-        d1.deleteUserByID(1);
+        //String sDate = "22.05.2000";
+        //CreateStudents c1 = new CreateStudents("John", "Cena", new SimpleDateFormat("dd.MM.yyyy").parse(sDate), 0);
+        //c1.insertNewUser();
+        //DeleteStudents d1 = new DeleteStudents();
+        //d1.deleteUserByID(1);
 
-        ReadStudents r1 = new ReadStudents();
+        //ReadStudents r1 = new ReadStudents();
         //r1.getStudentsAVG(1);
 
+        UpdateTeacher t1 = new UpdateTeacher();
+        t1.giveBonus(1);
 
     }
 }

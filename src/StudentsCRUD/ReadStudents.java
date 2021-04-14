@@ -3,9 +3,9 @@
 **/
 package StudentsCRUD;
 
-import Models.Students;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
+import Models.Students;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,8 +54,8 @@ public class ReadStudents implements Interfaces.Read {
                 "students_score.ID, " +
                 "students_score.Grade, " +
                 "students_score.Subject" +
-                "FROM students " +
-                "INNER JOIN students_score ON students.ID = students_score.StudentsID " +
+                "FROM students  " +
+                " JOIN students_score ON students.ID = students_score.StudentsID " +
                 "WHERE Students.ID = ?";
 
         try(PreparedStatement prSmt = conn.prepareStatement(getOneStudent)){
@@ -76,10 +76,10 @@ public class ReadStudents implements Interfaces.Read {
                         " name = " + name + "," +
                         " surname =" + surname + "," +
                         " Birth = " + birth + "," +
-                        " Scholarship = " + scholarship + "," +
+                        " Scholarship = " + scholarship + ",\n" +
+                                " Subject: " + subject + " { " +
                                 " Score id = " + scoreID + "," +
-                                " Subject = " + subject + "," +
-                                " Grade = " + grade + "," +
+                                " Grade = " + grade + " }\n" +
                         '}');
             }
         } catch (SQLException e){
@@ -121,9 +121,11 @@ public class ReadStudents implements Interfaces.Read {
                         "Relation{" +
                                 " students ID = " + ID + "," +
                                 " Students name = " + studentName + "," +
-                                " students surname = " + studentSurname + "," +
-                                " Teachers name = " + teachersName + "," +
-                                " teachers surname = " + teachersSurname +
+                                " students surname = " + studentSurname + ", \n" +
+                                " Teacher{"  +
+                                "           Teachers name = " + teachersName + "," +
+                                "           Teachers surname = " + teachersSurname +
+                                "        } \n" +
                                 '}');
             }
         } catch (SQLException e){

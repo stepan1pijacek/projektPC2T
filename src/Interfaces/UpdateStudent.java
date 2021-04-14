@@ -4,6 +4,7 @@
 package Interfaces;
 
 public interface UpdateStudent {
-    void giveOrTakeScholarship(int id, int scholarship);
+    void giveScholarship(int id);
+    void takeScholarship(int id);
     void updatePersonalInfo(int id);
 }
