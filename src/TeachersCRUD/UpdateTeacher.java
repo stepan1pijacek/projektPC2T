@@ -15,8 +15,17 @@ import java.util.Date;
 
 public class UpdateTeacher implements Update {
 
+    //Constant of bonus that cannot be changed by user input or any other class
     private static final int BONUS = 1500;
 
+    /**
+     * Operation to give bonus to the teacher based on number of students with Scholarship
+     *
+     * It consists of one SELECT and one UPDATE, where SELECT query selects from students executes JOIN on the junction table with students and teachers
+     * and final uses where clause with two parameters. Based on this it returns table with only students ID which are then counted using while loop.
+     * Counted students are then used as multiplier for BONUS const. If there is no student with scholarship for the given teacher it simply writes zero to
+     * the bonus field in the table
+     * */
     public void giveBonus(int id) {
         if(!UserExists.testIfExistsByID(id, "teachers")){
             throw new IllegalArgumentException("There is no student with provided ID");
@@ -59,6 +68,9 @@ public class UpdateTeacher implements Update {
         }
     }
 
+    /**
+     * Simple UPDATE that sets zero to the bonus field. In more advanced system it could be automated to take or give bonus once per given time frame.
+     * */
     public void takeBonus(int id) {
         if(!UserExists.testIfExistsByID(id, "teachers")){
             throw new IllegalArgumentException("There is no teacher with provided ID");
@@ -98,12 +110,33 @@ public class UpdateTeacher implements Update {
         }
     }
 
-    public void increasePay(int id) {
+    public void increasePay(int id, int pay) {
+
         if(!UserExists.testIfExistsByID(id, "teachers")){
             throw new IllegalArgumentException("There is no teacher with provided ID");
         }
 
         Connection conn = DBConnection.getDbConnection();
         String selectPay = "SELECT Pay FROM teachers WHERE ID = ?";
+        String updatePay = "UPDATE teachers SET Pay = ? WHERE ID = ?";
+
+        try(PreparedStatement prSmt = conn.prepareStatement(selectPay)){
+            prSmt.setInt(1, id);
+            ResultSet rs = prSmt.executeQuery();
+
+            pay += rs.getInt("Pay");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        try(PreparedStatement prSmt = conn.prepareStatement(updatePay)){
+            prSmt.setInt(1, pay);
+            prSmt.setInt(2, id);
+            prSmt.executeUpdate();
+
+            System.out.println("Teachers pay has been updated");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

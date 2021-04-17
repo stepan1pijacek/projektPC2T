@@ -1,4 +1,4 @@
-package CommonOperations;
+package CommonCRUD;
 
 import Utilities.UserExists;
 import dbConnect.DBConnection;
@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DeleteOperation implements Interfaces.Delete{
+public class Delete implements Interfaces.Delete{
     @Override
     public void deleteUserByID(int ID, String table) {
         if(!UserExists.testIfExistsByID(ID, "students")){

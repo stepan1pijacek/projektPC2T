@@ -3,7 +3,7 @@
  **/
 package StudentsCRUD;
 
-import CommonOperations.DeleteOperation;
+import CommonCRUD.Delete;
 import Utilities.Subjects;
 import Utilities.UserExists;
 import dbConnect.DBConnection;
@@ -15,8 +15,8 @@ import java.sql.SQLException;
 public class DeleteStudents {
 
     public void deleteStudent(int ID){
-        DeleteOperation deleteOperation = new DeleteOperation();
-        deleteOperation.deleteUserByID(ID, "students");
+        Delete delete = new Delete();
+        delete.deleteUserByID(ID, "students");
     }
 
     public void deleteScore(int id, Subjects subjects){
