@@ -12,21 +12,20 @@ import java.util.Date;
 
 public class CreateTeachers extends Teachers implements Create {
 
-    public CreateTeachers(String name, String surname, Date birth, int bonus, int pay) {
-        super(name, surname, birth, bonus, pay);
+    public CreateTeachers(String name, String surname, Date birth, int pay) {
+        super(name, surname, birth, pay);
     }
 
     @Override
     public void insertNewUser() {
         Connection conn = DBConnection.getDbConnection();
-        String insertQuery = "INSERT INTO teachers ( Name, Surname, Birth, Bonus, Pay) VALUES ( ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO teachers ( Name, Surname, Birth, Pay) VALUES ( ?, ?, ?, ?, ?)";
 
         try(PreparedStatement prSmt = conn.prepareStatement(insertQuery)){
             prSmt.setObject(1, this.getName());
             prSmt.setObject(2, this.getSurname());
             prSmt.setObject(3, this.getBirth());
-            prSmt.setObject(4, this.getBonus());
-            prSmt.setObject(5, this.getPay());
+            prSmt.setObject(4, this.getPay());
 
             prSmt.executeUpdate();
             System.out.println("New teacher has been added!");

@@ -14,10 +14,6 @@ import java.sql.SQLException;
 
 public class DeleteStudents {
 
-    public void deleteStudent(int ID){
-        Delete delete = new Delete();
-        delete.deleteUserByID(ID, "students");
-    }
 
     public void deleteScore(int id, Subjects subjects){
         if(!UserExists.testIfExistsByID(id,"students")){

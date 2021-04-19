@@ -10,11 +10,11 @@ import java.sql.SQLException;
 public class Delete implements Interfaces.Delete{
     @Override
     public void deleteUserByID(int ID, String table) {
-        if(!UserExists.testIfExistsByID(ID, "students")){
+        if(!UserExists.testIfExistsByID(ID, table)){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
         Connection conn = DBConnection.getDbConnection();
-        String deleteStudent = "DELETE * FROM students WHERE ID = ?";
+        String deleteStudent = "DELETE * FROM " + table + " WHERE ID = ?";
 
         try(PreparedStatement prSmt = conn.prepareStatement(deleteStudent)){
             prSmt.setInt(1, ID);

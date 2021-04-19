@@ -87,6 +87,7 @@ public class ReadStudents implements Interfaces.Read {
         }
     }
 
+    //TODO: move to common operations READ, no point in having it here
     public void readStudentsTeachersRelations(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
