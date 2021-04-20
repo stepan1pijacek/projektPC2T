@@ -95,7 +95,10 @@ public class ReadTeachers implements Read {
                 String teacherName = rs.getString("teachersName");
                 String teacherSurname = rs.getString("teachersSurname");
 
-                System.out.println("Result: { students ID = "+ studentID +" students Name = "+ studentName +" students Surname = "+ studentSurname +"}");
+                System.out.println("Result: { students ID = "+ studentID +" students Name = "+ studentName +" " +
+                        "students Surname = "+ studentSurname +" students Average = "+ studentsAVG +" " +
+                        "teachers ID = "+ teacherID +" teachers Name = "+ teacherName +" " +
+                        "teachers Surname = "+ teacherSurname +" }");
             }
         } catch (SQLException e){
             e.printStackTrace();
