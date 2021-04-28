@@ -33,11 +33,4 @@ public class CreateTeachers extends Teachers implements Create {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void assignTeacherToStudent(int studentID, int teacherID) {
-        CreateStudents createStudents = null;
-        createStudents.assignTeacherToStudent(studentID, teacherID);
-        System.out.println("New teacher student relation ahs been added");
-    }
 }

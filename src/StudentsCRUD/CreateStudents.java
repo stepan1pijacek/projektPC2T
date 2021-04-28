@@ -37,7 +37,7 @@ public class CreateStudents extends Students implements Interfaces.Create {
         }
     }
 
-    public void insertNewScore(int score, Subjects subjects, int id) {
+    public static void insertNewScore(int score, Subjects subjects, int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -53,26 +53,6 @@ public class CreateStudents extends Students implements Interfaces.Create {
             prSmt.executeUpdate();
             System.out.println("New score has been assigned to student");
         } catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void assignTeacherToStudent(int studentID, int teacherID) {
-        if(!UserExists.testIfExistsByID(studentID, "students") && !UserExists.testIfExistsByID(teacherID, "teachers")){
-            throw new IllegalArgumentException("Please, double check provided ID's for both student and teacher");
-        }
-
-        Connection conn = DBConnection.getDbConnection();
-        String insertRelationship = "INSERT INTO students_&_teachers (StudentsID, TeachersID) VALUES (?, ?)";
-
-        System.out.println("New relationship has been created student x teacher");
-        try(PreparedStatement prSmt = conn.prepareStatement(insertRelationship)){
-            prSmt.setInt(1, studentID);
-            prSmt.setInt(2, teacherID);
-
-            prSmt.executeUpdate();
-        } catch (SQLException e){
             e.printStackTrace();
         }
     }

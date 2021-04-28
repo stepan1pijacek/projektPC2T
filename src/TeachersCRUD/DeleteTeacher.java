@@ -6,8 +6,14 @@ package TeachersCRUD;
 import CommonCRUD.Delete;
 
 public class DeleteTeacher {
-    public void deleteTeacher(int ID){
-        Delete delete = new Delete();
-        delete.deleteUserByID(ID, "teachers");
+    public boolean deleteTeacher(int ID){
+        try {
+            Delete delete = new Delete();
+            delete.deleteUserByID(ID, "teachers");
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -15,6 +15,7 @@ import java.util.Date;
 
 public class ReadStudents implements Interfaces.Read {
 
+    //TODO: Delete it, no point in having this operation here
     @Override
     public void readAllUser() {
         Connection conn = DBConnection.getDbConnection();
@@ -39,7 +40,7 @@ public class ReadStudents implements Interfaces.Read {
         }
     }
 
-    @Override
+    //TODO: move to common operations
     public void readOneUser(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
@@ -87,7 +88,6 @@ public class ReadStudents implements Interfaces.Read {
         }
     }
 
-    //TODO: move to common operations READ, no point in having it here
     public void readStudentsTeachersRelations(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");

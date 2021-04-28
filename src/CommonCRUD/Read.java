@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class Read {
 
-    public void readAllTheFunds(){
+    public static void readAllTheFunds(){
         int teachersPay = 0;
         int studentsPay = 0;
         Connection conn = DBConnection.getDbConnection();
@@ -34,7 +34,8 @@ public class Read {
             System.out.println("Your tables seem to be empty.");
         }
     }
-    public void readAllUsers(){
+
+    public static void readAllUsers(){
         Connection conn = DBConnection.getDbConnection();
         String selectQuery = "SELECT " +
                 "ID, " +

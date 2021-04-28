@@ -26,9 +26,8 @@ public class Delete implements Interfaces.Delete{
         }
     }
 
-    @Override
-    public void deleteStudentTeacherRelation(int studentID, int teacherID) {
-        if(!UserExists.testIfExistsByID(studentID, "students") || !UserExists.testIfExistsByID(teacherID, "teachers")){
+    public static void deleteStudentTeacherRelation(int studentID, int teacherID) {
+        if(!UserExists.testIfExistsByID(studentID, "students") && !UserExists.testIfExistsByID(teacherID, "teachers")){
             throw new IllegalArgumentException("Double check provided ID, one of them might be faulty");
         }
 

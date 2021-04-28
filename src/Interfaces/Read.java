@@ -5,5 +5,5 @@ package Interfaces;
 
 public interface Read {
     void readAllUser();
-    void readOneUser(int id);
+    //void readOneUser(int id);
 }

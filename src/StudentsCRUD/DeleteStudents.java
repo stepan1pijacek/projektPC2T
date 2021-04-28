@@ -14,8 +14,19 @@ import java.sql.SQLException;
 
 public class DeleteStudents {
 
+    public boolean deleteStudentByID(int ID){
+        try{
+            Delete delete = new Delete();
+            delete.deleteUserByID(ID, "students");
+            System.out.println("Student has been deleted");
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-    public void deleteScore(int id, Subjects subjects){
+    public boolean deleteScore(int id, Subjects subjects){
         if(!UserExists.testIfExistsByID(id,"students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -29,8 +40,10 @@ public class DeleteStudents {
             prSmt.executeUpdate();
 
             System.out.println("Score has been removed");
+            return true;
         } catch(SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 }

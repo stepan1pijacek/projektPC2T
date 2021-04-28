@@ -37,7 +37,6 @@ public class ReadTeachers implements Read {
         }
     }
 
-    @Override
     public void readOneUser(int id) {
         Connection conn = DBConnection.getDbConnection();
         String getAllTeachers = "SELECT * FROM teachers where ID = id";
