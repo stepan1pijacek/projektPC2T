@@ -4,6 +4,6 @@
 package Interfaces;
 
 public interface Read {
-    void readAllUser();
+    boolean readAllUser();
     //void readOneUser(int id);
 }

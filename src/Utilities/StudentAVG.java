@@ -22,24 +22,19 @@ public class StudentAVG {
 
         Connection conn = DBConnection.getDbConnection();
         String getAVG = "SELECT " +
-                        "AVG(Grade) " +
+                        "AVG(Grade) as grade " +
                         "FROM students_score " +
                         "WHERE StudentsID = ? ";
 
         try(PreparedStatement prSmt = conn.prepareStatement(getAVG)){
             prSmt.setInt(1, id);
             ResultSet rs = prSmt.executeQuery();
-
-            while (rs.next()){
-                return rs.getInt("Grade");
-            }
+            return rs.getDouble("grade");
 
         } catch (SQLException e){
             e.printStackTrace();
-            return 0.0;
+            return 0;
         }
-
-        return 0.0;
     }
 
     public static @Nullable
@@ -63,7 +58,7 @@ public class StudentAVG {
             while (rs.next()){
                 studentTeacherGradeList.add(rs);
             }
-        } catch (SQLException e){
+        } catch (SQLException | NullPointerException e){
             e.printStackTrace();
             return null;
         }

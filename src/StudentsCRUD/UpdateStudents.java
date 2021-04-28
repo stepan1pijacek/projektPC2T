@@ -20,7 +20,7 @@ public class UpdateStudents implements Update {
     Students students;
 
 
-    public void giveScholarship(int id, int scholarship) {
+    public boolean giveScholarship(int id, int scholarship) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -36,15 +36,17 @@ public class UpdateStudents implements Update {
                 prSmt.executeUpdate();
 
                 System.out.println("Student has gained scholarship");
+                return true;
             } catch (SQLException e){
                 e.printStackTrace();
+                return false;
             }
         } else{
             throw new IllegalArgumentException("Students AVG is not low enough");
         }
     }
 
-    public void takeScholarship(int id) {
+    public boolean takeScholarship(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -57,8 +59,10 @@ public class UpdateStudents implements Update {
             prSmt.executeUpdate();
 
             System.out.println("Student lost his scholarship");
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 

@@ -1,7 +1,6 @@
 /**
  * @author Stepan Pijacek(223313)
  **/
-//TODO: Pay attention in creation of Student or Teacher, there might be changes bcs of moving to common operations, sub menu will be needed
 import CommonCRUD.Create;
 import CommonCRUD.Delete;
 import CommonCRUD.Read;
@@ -65,7 +64,9 @@ public class main {
                 System.out.println("18 Take teachers bonus");
                 System.out.println("19 Increase teachers pay");
                 System.out.println("20 Exit");
+
                 choice = ReadConsoleInput.readNumberInputFromConsole(sc);
+
                 switch (choice) {
                     //1 Create new student
                     case 1 -> {
@@ -239,6 +240,5 @@ public class main {
                 }
             }
         }
-
     }
 }

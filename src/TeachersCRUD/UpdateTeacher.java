@@ -26,7 +26,7 @@ public class UpdateTeacher implements Update {
      * Counted students are then used as multiplier for BONUS const. If there is no student with scholarship for the given teacher it simply writes zero to
      * the bonus field in the table
      * */
-    public void giveBonus(int id) {
+    public boolean giveBonus(int id) {
         if(!UserExists.testIfExistsByID(id, "teachers")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -51,27 +51,29 @@ public class UpdateTeacher implements Update {
             while (rs.next()){
                 studentCount += 1;
             }
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
         }
 
-        bonusGiven = BONUS * studentCount;
-
         try(PreparedStatement prSmt = conn.prepareStatement(giveBonus)){
+            bonusGiven = BONUS * studentCount;
             prSmt.setInt(1, bonusGiven);
             prSmt.setInt(2,id);
             prSmt.executeUpdate();
 
             System.out.println("Bonus has been given");
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 
     /**
      * Simple UPDATE that sets zero to the bonus field. In more advanced system it could be automated to take or give bonus once per given time frame.
      * */
-    public void takeBonus(int id) {
+    public boolean takeBonus(int id) {
         if(!UserExists.testIfExistsByID(id, "teachers")){
             throw new IllegalArgumentException("There is no teacher with provided ID");
         }
@@ -84,8 +86,10 @@ public class UpdateTeacher implements Update {
             prSmt.executeUpdate();
 
             System.out.println("Bonus has been taken");
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -110,7 +114,7 @@ public class UpdateTeacher implements Update {
         }
     }
 
-    public void increasePay(int id, int pay) {
+    public boolean increasePay(int id, int pay) {
 
         if(!UserExists.testIfExistsByID(id, "teachers")){
             throw new IllegalArgumentException("There is no teacher with provided ID");
@@ -125,6 +129,7 @@ public class UpdateTeacher implements Update {
             ResultSet rs = prSmt.executeQuery();
 
             pay += rs.getInt("Pay");
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -135,8 +140,10 @@ public class UpdateTeacher implements Update {
             prSmt.executeUpdate();
 
             System.out.println("Teachers pay has been updated");
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 }

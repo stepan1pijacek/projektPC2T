@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class ReadTeachers implements Read {
     @Override
-    public void readAllUser() {
+    public boolean readAllUser() {
         Connection conn = DBConnection.getDbConnection();
         String getAllTeachers = "SELECT * FROM teachers";
 
@@ -32,16 +32,19 @@ public class ReadTeachers implements Read {
                 teachers.setBonus(bonus);
                 System.out.println(teachers);
             }
+            return true;
         } catch(SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 
-    public void readOneUser(int id) {
+    public boolean readOneUser(int id) {
         Connection conn = DBConnection.getDbConnection();
-        String getAllTeachers = "SELECT * FROM teachers where ID = id";
+        String getAllTeachers = "SELECT * FROM teachers WHERE ID = ?";
 
         try(PreparedStatement prSmt = conn.prepareStatement(getAllTeachers)){
+            prSmt.setInt(1, id);
             ResultSet rs = prSmt.executeQuery();
 
             while (rs.next()){
@@ -56,16 +59,19 @@ public class ReadTeachers implements Read {
                 teachers.setBonus(bonus);
                 System.out.println(teachers);
             }
+            return true;
         } catch(SQLException e){
             e.printStackTrace();
         }
+        return false;
     }
 
-    public void readTeachersStudents(int id){
+    public boolean readTeachersStudents(int id){
         Connection conn = DBConnection.getDbConnection();
         String getTeachersStudentsOrderByAVG= "SELECT " +
                 "students.ID as studentsID, " +
                 "students.Name as studentsName, " +
+                "students.Surname as studentsSurname, " +
                 "AVG(students_score.Grade) as Average, " +
                 "teachers.ID as teachersID, " +
                 "teachers.Name as teachersName, " +
@@ -99,8 +105,10 @@ public class ReadTeachers implements Read {
                         "teachers ID = "+ teacherID +" teachers Name = "+ teacherName +" " +
                         "teachers Surname = "+ teacherSurname +" }");
             }
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 }

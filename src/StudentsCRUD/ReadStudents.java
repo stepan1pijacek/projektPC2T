@@ -15,9 +15,8 @@ import java.util.Date;
 
 public class ReadStudents implements Interfaces.Read {
 
-    //TODO: Delete it, no point in having this operation here
     @Override
-    public void readAllUser() {
+    public boolean readAllUser() {
         Connection conn = DBConnection.getDbConnection();
         String getAllStudents = "SELECT * FROM students";
 
@@ -34,14 +33,16 @@ public class ReadStudents implements Interfaces.Read {
                Students students = new Students( name, surname, birth, scholarship);
                students.setID(id);
                System.out.println(students);
+
             }
+            return true;
         } catch(SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 
-    //TODO: move to common operations
-    public void readOneUser(int id) {
+    public boolean readOneUser(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -54,10 +55,10 @@ public class ReadStudents implements Interfaces.Read {
                 "students.Scholarship, " +
                 "students_score.ID, " +
                 "students_score.Grade, " +
-                "students_score.Subject" +
+                "students_score.Subject " +
                 "FROM students  " +
-                " JOIN students_score ON students.ID = students_score.StudentsID " +
-                "WHERE Students.ID = ?";
+                "JOIN students_score ON  students_score.StudentsID = students.ID " +
+                "WHERE students.ID = ? ";
 
         try(PreparedStatement prSmt = conn.prepareStatement(getOneStudent)){
             prSmt.setInt(1, id);
@@ -83,12 +84,14 @@ public class ReadStudents implements Interfaces.Read {
                                 " Grade = " + grade + " }\n" +
                         '}');
             }
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 
-    public void readStudentsTeachersRelations(int id) {
+    public boolean readStudentsTeachersRelations(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -129,12 +132,14 @@ public class ReadStudents implements Interfaces.Read {
                                 "        } \n" +
                                 '}');
             }
+            return true;
         } catch (SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 
-    public void getStudentsAVG(int id) {
+    public boolean getStudentsAVG(int id) {
         if(!UserExists.testIfExistsByID(id, "students")){
             throw new IllegalArgumentException("There is no student with provided ID");
         }
@@ -168,8 +173,10 @@ public class ReadStudents implements Interfaces.Read {
                                 " }"
                 );
             }
+            return true;
         } catch(SQLException e){
             e.printStackTrace();
+            return false;
         }
     }
 }

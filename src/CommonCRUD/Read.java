@@ -70,6 +70,5 @@ public class Read {
         } catch (SQLException e){
             e.printStackTrace();
         }
-
     }
 }

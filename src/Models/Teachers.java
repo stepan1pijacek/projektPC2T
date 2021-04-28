@@ -32,7 +32,7 @@ public class Teachers {
 
     @Override
     public String toString() {
-        return "Student{" + "\n" +
+        return "\n Teacher{" + "\n" +
                 " ID = " + ID + ", \n" +
                 " name = " + Name + ", \n" +
                 " surname =" + Surname + ", \n" +
